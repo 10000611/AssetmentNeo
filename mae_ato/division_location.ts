@@ -1,31 +1,27 @@
 function main(workbook: ExcelScript.Workbook) {
-    const sheet = workbook.getWorksheet("AssetmentNeo投入データ(部門・ロケーション変換)");
-    const masterSheet = workbook.getWorksheet("部門マスタ");
+    const sheet = workbook.getWorksheet("資産分類区分、ロケーションをマスタの番号に変換");
+    const assetTypeSheet = workbook.getWorksheet("資産分類マスタ");
     const locationSheet = workbook.getWorksheet("ロケーションマスタ");
 
     const usedRange = sheet.getUsedRange();
     const rowCount = usedRange.getRowCount();
 
-    // L列（列11）
+    // L列: 資産分類区分（列11）
     const lRange = sheet.getRangeByIndexes(1, 11, rowCount - 1, 1);
     const lColumn = lRange.getValues();
 
-    // M列（列12）
-    const mRange = sheet.getRangeByIndexes(1, 12, rowCount - 1, 1);
-    const mColumn = mRange.getValues();
-
-    // N列（列13） 
+    // N列: ロケーション（列13）
     const nRange = sheet.getRangeByIndexes(1, 13, rowCount - 1, 1);
     const nColumn = nRange.getValues();
 
-    // 部門マスタ取得（A列:コード, B列:部門名）
-    const masterValues = masterSheet.getUsedRange().getValues();
-    const masterMap = new Map<string, string>();
-    for (let i = 1; i < masterValues.length; i++) {
-        const code = masterValues[i][0]?.toString().trim();
-        const name = masterValues[i][1]?.toString().trim();
+    // 資産分類マスタ取得（A列:コード, B列:資産分類名）
+    const assetValues = assetTypeSheet.getUsedRange().getValues();
+    const assetMap = new Map<string, string>();
+    for (let i = 1; i < assetValues.length; i++) {
+        const code = assetValues[i][0]?.toString().trim();
+        const name = assetValues[i][1]?.toString().trim();
         if (code && name) {
-            masterMap.set(name, code);
+            assetMap.set(name, code);
         }
     }
 
@@ -40,21 +36,14 @@ function main(workbook: ExcelScript.Workbook) {
         }
     }
 
-    // L列（部門）変換
+    // 資産分類区分（L列）変換
     for (let i = 0; i < lColumn.length; i++) {
-        const deptName = lColumn[i][0]?.toString().trim();
-        lColumn[i][0] = deptName && masterMap.has(deptName) ? masterMap.get(deptName) : "";
+        const assetName = lColumn[i][0]?.toString().trim();
+        lColumn[i][0] = assetName && assetMap.has(assetName) ? assetMap.get(assetName) : "";
     }
     lRange.setValues(lColumn);
 
-    // M列（部門）変換
-    for (let i = 0; i < mColumn.length; i++) {
-        const deptName = mColumn[i][0]?.toString().trim();
-        mColumn[i][0] = deptName && masterMap.has(deptName) ? masterMap.get(deptName) : "";
-    }
-    mRange.setValues(mColumn);
-
-    // N列（ロケーション）変換
+    // ロケーション（N列）変換
     for (let i = 0; i < nColumn.length; i++) {
         const locName = nColumn[i][0]?.toString().trim();
         nColumn[i][0] = locName && locationMap.has(locName) ? locationMap.get(locName) : "";

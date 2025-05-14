@@ -1,7 +1,8 @@
 function main(workbook: ExcelScript.Workbook) {
-  const sheet = workbook.getWorksheet("AssetmentNeo投入データ(部門・ロケーション変換)");
+  const sheet = workbook.getWorksheet("資産分類区分、利用部門、管理部門をマスタの番号に変換");
 
-  // 1000行を取得
+
+  // 明示的に A2 から AP列まで（最大1000行）を取得
   const maxRows = 1000;
   const numCols = 42;
   const dataStartRow = 1; // A2 から開始（0-indexedで1）
@@ -11,7 +12,7 @@ function main(workbook: ExcelScript.Workbook) {
   // ヘッダー取得（1行目）
   const header = sheet.getRange("A1:AP1").getValues()[0];
 
-  const quantityColIndex = 15; // 「数量」列（P列）
+  const quantityColIndex = 16; // 「数量」列（Q列）←★修正箇所
 
   let expandedData: (string | number | boolean | null)[][] = [];
 
