@@ -1,5 +1,5 @@
 function main(workbook: ExcelScript.Workbook) {
-  const sheet = workbook.getWorksheet("資産分類区分、利用部門、管理部門をマスタの番号に変換");
+  const sheet = workbook.getWorksheet("数量_マスタ変換");
 
 
   // A2 から AP列まで（最大1000行）を取得

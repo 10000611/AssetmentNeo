@@ -1,5 +1,5 @@
 function main(workbook: ExcelScript.Workbook) {
-  const sheet = workbook.getWorksheet("AssetmentNeo投入データ(数量分加工後)");
+  const sheet = workbook.getWorksheet("AssetmentNeo投入データ");
   const lastRow = sheet.getUsedRange().getRowCount();
   const startRow = 1; // A2から開始（0-index）
 
