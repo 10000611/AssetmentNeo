@@ -58,9 +58,9 @@ function main(workbook: ExcelScript.Workbook) {
   }
 
   // 出力先：展開結果シート
-  let outputSheet = workbook.getWorksheet("AssetmentNeo投入データ(数量分加工後)");
+  let outputSheet = workbook.getWorksheet("AssetmentNeo投入データ");
   if (!outputSheet) {
-    outputSheet = workbook.addWorksheet("AssetmentNeo投入データ(数量分加工後)");
+    outputSheet = workbook.addWorksheet("AssetmentNeo投入データ");
   } else {
     outputSheet.getUsedRange()?.clear(ExcelScript.ClearApplyTo.all);
   }
