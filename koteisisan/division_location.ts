@@ -1,5 +1,5 @@
 function main(workbook: ExcelScript.Workbook) {
-  const sheet = workbook.getWorksheet("資産分類区分、利用部門、管理部門をマスタの番号に変換");
+  const sheet = workbook.getWorksheet("AssetmentNeo投入データ");
   const assetTypeSheet = workbook.getWorksheet("資産分類マスタ");
   const masterSheet = workbook.getWorksheet("部門マスタ");
   const locationSheet = workbook.getWorksheet("ロケーションマスタ");
